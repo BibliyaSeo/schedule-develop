@@ -12,4 +12,6 @@ public interface UserService {
     UserResponseDto findUserById(Long id);
 
     void updatePassword(Long id, String oldPassword, String newPassword);
+
+    void deleteUser(Long id);
 }

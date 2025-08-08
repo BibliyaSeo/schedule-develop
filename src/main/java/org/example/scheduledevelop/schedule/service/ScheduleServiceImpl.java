@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.entity.Schedule;
 import org.example.scheduledevelop.schedule.repository.ScheduleRepository;
+import org.example.scheduledevelop.users.entity.User;
+import org.example.scheduledevelop.users.repository.UserRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,13 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     // 일정 생성
     @Override
-    public ScheduleResponseDto createSchedule(String username, String title, String contents) {
-        Schedule saveSchedule = scheduleRepository.save(new Schedule(username, title, contents));
+    public ScheduleResponseDto createSchedule(Long userId, String title, String contents) {
+        User findUser = userRepository.findByIdOrElseThrow(userId);
+        Schedule saveSchedule = scheduleRepository.save(new Schedule(findUser, title, contents));
         return new ScheduleResponseDto(saveSchedule);
     }
 
@@ -34,7 +38,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (username == null || username.isEmpty()) {
             schedules = scheduleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            schedules = scheduleRepository.findByUsernameOrderByCreatedAtDesc(username);
+            schedules = scheduleRepository.findByUser_UsernameOrderByCreatedAtDesc(username);
         }
         return schedules.stream().map(ScheduleResponseDto::new).toList();
     }
