@@ -29,4 +29,11 @@ public class ScheduleController {
     public List<ScheduleResponseDto> findScheduleByUsername(@RequestParam(required = false) String username) {
         return scheduleService.findScheduleByUsername(username);
     }
+
+    // 일정 개별 조회
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
+        return scheduleService.findScheduleById(id);
+    }
 }

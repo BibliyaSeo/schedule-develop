@@ -37,5 +37,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         return schedules.stream().map(ScheduleResponseDto::new).toList();
     }
 
+    // 일정 개별 조회
+    @Override
+    @Transactional(readOnly = true)
+    public ScheduleResponseDto findScheduleById(Long id) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        return new ScheduleResponseDto(findSchedule);
+    }
+
 
 }

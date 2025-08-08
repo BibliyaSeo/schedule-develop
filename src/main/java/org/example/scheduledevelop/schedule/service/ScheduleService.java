@@ -10,4 +10,5 @@ public interface ScheduleService {
 
     List<ScheduleResponseDto> findScheduleByUsername(String username);
 
+    ScheduleResponseDto findScheduleById(@RequestBody Long id);
 }
