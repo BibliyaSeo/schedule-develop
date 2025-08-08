@@ -7,8 +7,10 @@ import org.example.scheduledevelop.users.dto.UserResponseDto;
 import org.example.scheduledevelop.users.entity.User;
 import org.example.scheduledevelop.users.repository.UserRepository;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -47,5 +49,15 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto findUserById(Long id) {
         User findUser = userRepository.findByIdOrElseThrow(id);
         return new UserResponseDto(findUser);
+    }
+
+    // 비밀번호 변경
+    @Override
+    public void updatePassword(Long id, String oldPassword, String newPassword) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+        if (!findUser.getPassword().equals(oldPassword)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
+        }
+        findUser.updatePassword(newPassword);
     }
 }

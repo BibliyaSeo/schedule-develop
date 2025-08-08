@@ -2,6 +2,7 @@ package org.example.scheduledevelop.users.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.users.dto.SingUpUserRequestDto;
+import org.example.scheduledevelop.users.dto.UpdatePasswordRequestDto;
 import org.example.scheduledevelop.users.dto.UserResponseDto;
 import org.example.scheduledevelop.users.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserResponseDto findUserById(@PathVariable Long id) {
         return userService.findUserById(id);
+    }
+
+    // 비밀번호 변경
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@PathVariable Long id, @RequestBody UpdatePasswordRequestDto dto) {
+        userService.updatePassword(id, dto.getOldPassword(), dto.getNewPassword());
     }
 }
