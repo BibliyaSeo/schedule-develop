@@ -19,11 +19,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     // 일정 생성
     @Override
-    public ScheduleResponseDto save(String username, String title, String contents) {
+    public ScheduleResponseDto createSchedule(String username, String title, String contents) {
         Schedule saveSchedule = scheduleRepository.save(new Schedule(username, title, contents));
         return new ScheduleResponseDto(saveSchedule);
     }
 
+    // 일정 전체 조회(또는 작성자명 조회)
     @Override
     @Transactional(readOnly = true)
     public List<ScheduleResponseDto> findScheduleByUsername(String username) {
@@ -35,4 +36,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
         return schedules.stream().map(ScheduleResponseDto::new).toList();
     }
+
+
 }

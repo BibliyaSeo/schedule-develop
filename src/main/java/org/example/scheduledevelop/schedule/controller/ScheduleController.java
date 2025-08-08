@@ -20,13 +20,13 @@ public class ScheduleController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ScheduleResponseDto createSchedule(@RequestBody CreateScheduleRequestDto dto) {
-        return scheduleService.save(dto.getUsername(), dto.getTitle(), dto.getContents());
+        return scheduleService.createSchedule(dto.getUsername(), dto.getTitle(), dto.getContents());
     }
 
-    // 전체 조회(또는 작성자명 조회)
+    // 일정 전체 조회(또는 작성자명 조회)
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ScheduleResponseDto> findAllScheduleByUsername(@RequestParam(required = false) String username) {
+    public List<ScheduleResponseDto> findScheduleByUsername(@RequestParam(required = false) String username) {
         return scheduleService.findScheduleByUsername(username);
     }
 }
