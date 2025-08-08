@@ -6,8 +6,11 @@ import org.example.scheduledevelop.common.exception.MyCustomException;
 import org.example.scheduledevelop.users.dto.UserResponseDto;
 import org.example.scheduledevelop.users.entity.User;
 import org.example.scheduledevelop.users.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +27,18 @@ public class UserServiceImpl implements UserService {
         }
         User newUser = userRepository.save(new User(username, email, password));
         return new UserResponseDto(newUser);
+    }
+
+    // 전체 유저 조회(또는 유저명 조회)
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserResponseDto> findUserByUsername(String username) {
+        List<User> users;
+        if (username == null || username.isEmpty()) {
+            users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "createdAt"));
+        } else {
+            users = userRepository.findByUsernameOrderByCreatedAtAsc(username);
+        }
+        return users.stream().map(UserResponseDto::new).toList();
     }
 }
