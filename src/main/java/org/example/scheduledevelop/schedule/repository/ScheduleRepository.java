@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
-    List<Schedule> findByUsernameOrderByCreatedAtDesc(String username);
+    List<Schedule> findByUser_UsernameOrderByCreatedAtDesc(String username);
 
     default Schedule findByIdOrElseThrow(Long id) {
         return findById(id).orElseThrow(() -> new MyCustomException(ErrorCode.POST_NOT_FOUND));

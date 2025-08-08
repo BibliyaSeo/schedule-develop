@@ -43,4 +43,11 @@ public class UserController {
     public void updateUser(@PathVariable Long id, @RequestBody UpdatePasswordRequestDto dto) {
         userService.updatePassword(id, dto.getOldPassword(), dto.getNewPassword());
     }
+
+    // 유저 삭제
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
 }

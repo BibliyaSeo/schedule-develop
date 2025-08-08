@@ -1,12 +1,11 @@
 package org.example.scheduledevelop.schedule.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.example.scheduledevelop.common.entity.BaseEntity;
+import org.example.scheduledevelop.users.entity.User;
 
 @Entity
 @Getter
@@ -17,12 +16,16 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
     private String title;
     private String contents;
 
-    public Schedule(String username, String title, String contents) {
-        this.username = username;
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Schedule(User user, String title, String contents) {
+        this.user = user;
         this.title = title;
         this.contents = contents;
     }

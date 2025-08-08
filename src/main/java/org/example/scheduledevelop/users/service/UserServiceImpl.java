@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
 
     // 유저 단건 조회
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDto findUserById(Long id) {
         User findUser = userRepository.findByIdOrElseThrow(id);
         return new UserResponseDto(findUser);
@@ -59,5 +60,11 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
         }
         findUser.updatePassword(newPassword);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+        userRepository.delete(findUser);
     }
 }
