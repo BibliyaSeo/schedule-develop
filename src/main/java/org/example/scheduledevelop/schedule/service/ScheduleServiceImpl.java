@@ -5,8 +5,10 @@ import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.entity.Schedule;
 import org.example.scheduledevelop.schedule.repository.ScheduleRepository;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
         if (title == null && contents == null) {
-            throw new IllegalArgumentException("title 또는 contents를 입력해 주세요.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title 또는 contents를 입력해 주세요.");
         }
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
 
