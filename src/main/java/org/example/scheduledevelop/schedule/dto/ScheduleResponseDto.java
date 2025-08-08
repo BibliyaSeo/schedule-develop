@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class ScheduleResponseesDto {
+public class ScheduleResponseDto {
     private final Long id;
     private final String username;
     private final String title;
@@ -14,7 +14,7 @@ public class ScheduleResponseesDto {
     private final LocalDateTime updatedAt;
 
 
-    public ScheduleResponseesDto(Long id, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ScheduleResponseDto(Long id, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.username = username;
         this.title = title;
