@@ -20,4 +20,10 @@ public class Schedule extends BaseEntity {
     private String username;
     private String title;
     private String contents;
+
+    public Schedule(String username, String title, String contents) {
+        this.username = username;
+        this.title = title;
+        this.contents = contents;
+    }
 }
