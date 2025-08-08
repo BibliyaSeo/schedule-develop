@@ -8,4 +8,6 @@ public interface UserService {
     UserResponseDto signUp(String username, String email, String password);
 
     List<UserResponseDto> findUserByUsername(String username);
+
+    UserResponseDto findUserById(Long id);
 }

@@ -41,4 +41,11 @@ public class UserServiceImpl implements UserService {
         }
         return users.stream().map(UserResponseDto::new).toList();
     }
+
+    // 유저 단건 조회
+    @Override
+    public UserResponseDto findUserById(Long id) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+        return new UserResponseDto(findUser);
+    }
 }

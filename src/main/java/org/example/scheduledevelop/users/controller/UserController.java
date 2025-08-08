@@ -28,4 +28,11 @@ public class UserController {
     public List<UserResponseDto> findUserByUsername(@RequestParam(required = false) String username) {
         return userService.findUserByUsername(username);
     }
+
+    // 유저 단건 조회
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponseDto findUserById(@PathVariable Long id) {
+        return userService.findUserById(id);
+    }
 }
