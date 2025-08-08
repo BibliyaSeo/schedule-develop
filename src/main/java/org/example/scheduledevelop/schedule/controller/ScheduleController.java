@@ -3,9 +3,11 @@ package org.example.scheduledevelop.schedule.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.schedule.dto.CreateScheduleRequestDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
+import org.example.scheduledevelop.schedule.dto.UpdateScheduleRequestDto;
 import org.example.scheduledevelop.schedule.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,4 +38,15 @@ public class ScheduleController {
     public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
         return scheduleService.findScheduleById(id);
     }
+
+    // 일정 수정
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody UpdateScheduleRequestDto dto) {
+        if (dto.getTitle() == null && dto.getContents() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title 또는 contents의 값을 입력해 주세요.");
+        }
+        return scheduleService.updateSchedule(id, dto.getTitle(), dto.getContents());
+    }
+
 }

@@ -45,5 +45,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         return new ScheduleResponseDto(findSchedule);
     }
 
+    // 일정 수정
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+        if (title == null && contents == null) {
+            throw new IllegalArgumentException("title 또는 contents를 입력해 주세요.");
+        }
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        findSchedule.updateSchedule(title, contents);
+        return new ScheduleResponseDto(findSchedule);
+    }
+
 
 }
