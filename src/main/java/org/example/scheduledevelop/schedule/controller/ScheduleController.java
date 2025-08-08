@@ -49,4 +49,10 @@ public class ScheduleController {
         return scheduleService.updateSchedule(id, dto.getTitle(), dto.getContents());
     }
 
+    // 일정 삭제
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSchedule(@PathVariable Long id) {
+        scheduleService.deleteSchedule(id);
+    }
 }
