@@ -10,4 +10,6 @@ public interface UserService {
     List<UserResponseDto> findUserByUsername(String username);
 
     UserResponseDto findUserById(Long id);
+
+    void updatePassword(Long id, String oldPassword, String newPassword);
 }
