@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
     // 회원가입
     @Override
     public UserResponseDto signUp(String username, String email, String password) {
-        if (username == null || email == null || password == null) {
-            throw new MyCustomException(ErrorCode.INVALID_INPUT);
+        if (userRepository.existsByEmail(email)) {
+            throw new MyCustomException(ErrorCode.DUPLICATE_USER);
         }
+
         User newUser = userRepository.save(new User(username, email, password));
         return new UserResponseDto(newUser);
     }

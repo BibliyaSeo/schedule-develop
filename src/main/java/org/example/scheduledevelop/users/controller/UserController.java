@@ -1,5 +1,6 @@
 package org.example.scheduledevelop.users.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.users.dto.SingUpUserRequestDto;
 import org.example.scheduledevelop.users.dto.UpdatePasswordRequestDto;
@@ -19,7 +20,7 @@ public class UserController {
     // 회원가입
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto signUp(@RequestBody SingUpUserRequestDto dto) {
+    public UserResponseDto signUp(@Valid @RequestBody SingUpUserRequestDto dto) {
         return userService.signUp(dto.getUsername(), dto.getEmail(), dto.getPassword());
     }
 
@@ -40,7 +41,7 @@ public class UserController {
     // 비밀번호 변경
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable Long id, @RequestBody UpdatePasswordRequestDto dto) {
+    public void updateUser(@PathVariable Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
         userService.updatePassword(id, dto.getOldPassword(), dto.getNewPassword());
     }
 
