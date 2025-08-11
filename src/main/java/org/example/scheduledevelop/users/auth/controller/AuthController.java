@@ -2,6 +2,7 @@ package org.example.scheduledevelop.users.auth.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.users.auth.dto.LogInRequestDto;
 import org.example.scheduledevelop.users.auth.service.AuthService;
@@ -19,7 +20,7 @@ public class AuthController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(HttpServletRequest request, @RequestBody LogInRequestDto dto) {
+    public String login(HttpServletRequest request, @Valid @RequestBody LogInRequestDto dto) {
         Long userId = authService.login(dto.getEmail(), dto.getPassword());
         HttpSession session = request.getSession();
         session.setAttribute("LOGIN_USER", userId);
