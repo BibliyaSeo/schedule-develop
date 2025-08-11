@@ -1,6 +1,7 @@
 package org.example.scheduledevelop.users.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduledevelop.users.config.PasswordEncoder;
 import org.example.scheduledevelop.users.entity.User;
 import org.example.scheduledevelop.users.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 @Transactional
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Long login(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다."));
-
-        if (!user.getPassword().equals(password)) {
+        
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다.");
         }
 
