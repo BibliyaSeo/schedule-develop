@@ -11,7 +11,7 @@ public class CreateScheduleRequestDto {
     private final String title;
 
     @NotBlank(message = "내용은 필수 입력 사항입니다.")
-    @Size(max = 100, message = "내용은 10자 이내여야 합니다.")
+    @Size(max = 100, message = "내용은 100자 이내여야 합니다.")
     private final String contents;
 
     public CreateScheduleRequestDto(String title, String contents) {

@@ -15,13 +15,24 @@ public class ScheduleResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
+    public ScheduleResponseDto(Long id, Long userId, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.username = username;
+        this.title = title;
+        this.contents = contents;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public ScheduleResponseDto(Schedule schedule) {
-        this.id = schedule.getId();
-        this.userId = schedule.getUser().getId();
-        this.username = schedule.getUser().getUsername();
-        this.title = schedule.getTitle();
-        this.contents = schedule.getContents();
-        this.createdAt = schedule.getCreatedAt();
-        this.updatedAt = schedule.getUpdatedAt();
+        this(schedule.getId(),
+                schedule.getUser().getId(),
+                schedule.getUser().getUsername(),
+                schedule.getTitle(),
+                schedule.getContents(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt()
+        );
     }
 }
