@@ -10,7 +10,6 @@ import org.example.scheduledevelop.schedule.dto.UpdateScheduleRequestDto;
 import org.example.scheduledevelop.schedule.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,9 +25,6 @@ public class ScheduleController {
     @ResponseStatus(HttpStatus.CREATED)
     public ScheduleResponseDto createSchedule(HttpServletRequest request, @Valid @RequestBody CreateScheduleRequestDto dto) {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("LOGIN_USER") == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
-        }
         Long userId = (Long) session.getAttribute("LOGIN_USER");
         return scheduleService.createSchedule(userId, dto.getTitle(), dto.getContents());
     }

@@ -10,7 +10,6 @@ import org.example.scheduledevelop.comments.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +23,6 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponseDto createComment(HttpServletRequest request, @PathVariable Long scheduleId, @Valid @RequestBody CreateCommentRequestDto dto) {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("LOGIN_USER") == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
-        }
         Long userId = (Long) session.getAttribute("LOGIN_USER");
         return commentService.createComment(scheduleId, userId, dto.getContents());
     }
