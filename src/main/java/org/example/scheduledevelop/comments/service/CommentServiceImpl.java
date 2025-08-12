@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentResponseDto> findAllComments(Long scheduleId) {
         // 스케줄 유효
         Schedule schedule = scheduleService.findEntityById(scheduleId);
-        return commentRepository.findAllByScheduleId(schedule.getId())
+        return commentRepository.findAllByScheduleIdOrderByCreatedAtDesc(schedule.getId())
                 .stream()
                 .map(CommentResponseDto::new)
                 .toList();
