@@ -2,14 +2,14 @@ package org.example.scheduledevelop.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.scheduledevelop.common.entity.BaseEntity;
 import org.example.scheduledevelop.users.entity.User;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Schedule extends BaseEntity {
 
     @Id
