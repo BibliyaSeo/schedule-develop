@@ -35,7 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<ScheduleResponseDto> findScheduleByUsername(String username) {
         List<Schedule> schedules;
-        if (username == null || username.isEmpty()) {
+        if (username == null || username.isBlank()) {
             schedules = scheduleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
             schedules = scheduleRepository.findByUser_UsernameOrderByCreatedAtDesc(username);
@@ -59,21 +59,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     // 일정 수정
     @Override
-    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+    public ScheduleResponseDto updateSchedule(Long id, Long userId, String title, String contents) {
         if (title == null && contents == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "title 또는 contents를 입력해 주세요.");
         }
+
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
 
+        // 유저 아이디와 수정하려는 아이디가 같다면
+        if (!findSchedule.getUser().getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
+        }
         findSchedule.updateSchedule(title, contents);
         return new ScheduleResponseDto(findSchedule);
     }
 
     @Override
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(Long id, Long userId) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        if (!findSchedule.getUser().getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
+        }
         scheduleRepository.delete(findSchedule);
     }
-
-
 }
