@@ -16,7 +16,10 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", nullable = false, length = 10)
     private String title;
+
+    @Column(name = "contents", nullable = false, length = 100)
     private String contents;
 
     @Setter
