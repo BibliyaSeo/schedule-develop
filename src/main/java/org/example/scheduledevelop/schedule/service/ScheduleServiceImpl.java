@@ -1,6 +1,9 @@
 package org.example.scheduledevelop.schedule.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduledevelop.comments.dto.CommentResponseDto;
+import org.example.scheduledevelop.comments.repository.CommentRepository;
+import org.example.scheduledevelop.schedule.dto.DetailScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.entity.Schedule;
 import org.example.scheduledevelop.schedule.repository.ScheduleRepository;
@@ -21,6 +24,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     // 일정 생성
     @Override
@@ -46,9 +50,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     // 일정 개별 조회
     @Override
     @Transactional(readOnly = true)
-    public ScheduleResponseDto findScheduleById(Long id) {
+    public DetailScheduleResponseDto findScheduleById(Long id) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
-        return new ScheduleResponseDto(findSchedule);
+
+        List<CommentResponseDto> comments = commentRepository.findAllByScheduleIdOrderByCreatedAtDesc(id)
+                .stream()
+                .map(CommentResponseDto::new)
+                .toList();
+
+        return new DetailScheduleResponseDto(findSchedule, comments);
     }
 
     // 엔티티 반환용

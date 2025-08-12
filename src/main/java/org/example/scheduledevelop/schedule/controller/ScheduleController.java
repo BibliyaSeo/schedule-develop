@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.common.utils.SessionUtil;
 import org.example.scheduledevelop.schedule.dto.CreateScheduleRequestDto;
+import org.example.scheduledevelop.schedule.dto.DetailScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.UpdateScheduleRequestDto;
 import org.example.scheduledevelop.schedule.service.ScheduleService;
@@ -38,7 +39,7 @@ public class ScheduleController {
     // 일정 개별 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
+    public DetailScheduleResponseDto findScheduleById(@PathVariable Long id) {
         return scheduleService.findScheduleById(id);
     }
 
