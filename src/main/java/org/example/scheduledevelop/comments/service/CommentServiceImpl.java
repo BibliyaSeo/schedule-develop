@@ -8,8 +8,10 @@ import org.example.scheduledevelop.schedule.entity.Schedule;
 import org.example.scheduledevelop.schedule.service.ScheduleService;
 import org.example.scheduledevelop.users.entity.User;
 import org.example.scheduledevelop.users.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -41,5 +43,16 @@ public class CommentServiceImpl implements CommentService {
                 .stream()
                 .map(CommentResponseDto::new)
                 .toList();
+    }
+
+    @Override
+    public CommentResponseDto updateComment(Long commentId, Long userId, String contents) {
+        Comment findComment = commentRepository.findByIdOrElseThrow(commentId);
+        // 댓글의 작성자 아이디와 지금 로그인 된 아이디가 같다면
+        if (!findComment.getUser().getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인만 댓글을 수정할 수 있습니다.");
+        }
+        findComment.updateComment(contents);
+        return new CommentResponseDto(findComment);
     }
 }

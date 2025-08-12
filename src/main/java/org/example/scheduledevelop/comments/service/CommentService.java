@@ -8,4 +8,6 @@ public interface CommentService {
     CommentResponseDto createComment(Long scheduleId, Long userId, String contents);
 
     List<CommentResponseDto> findAllComments(Long scheduleId);
+
+    CommentResponseDto updateComment(Long commentId, Long userId, String contents);
 }
