@@ -1,5 +1,6 @@
 package org.example.scheduledevelop.schedule.service;
 
+import org.example.scheduledevelop.schedule.dto.DetailScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.entity.Schedule;
 
@@ -10,7 +11,7 @@ public interface ScheduleService {
 
     List<ScheduleResponseDto> findScheduleByUsername(String username);
 
-    ScheduleResponseDto findScheduleById(Long id);
+    DetailScheduleResponseDto findScheduleById(Long id);
 
     Schedule findEntityById(Long id);
 
