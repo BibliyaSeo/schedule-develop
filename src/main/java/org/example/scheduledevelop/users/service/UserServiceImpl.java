@@ -3,6 +3,7 @@ package org.example.scheduledevelop.users.service;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduledevelop.common.exception.ErrorCode;
 import org.example.scheduledevelop.common.exception.MyCustomException;
+import org.example.scheduledevelop.users.config.PasswordEncoder;
 import org.example.scheduledevelop.users.dto.UserResponseDto;
 import org.example.scheduledevelop.users.entity.User;
 import org.example.scheduledevelop.users.repository.UserRepository;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원가입
     @Override
@@ -28,7 +30,9 @@ public class UserServiceImpl implements UserService {
             throw new MyCustomException(ErrorCode.DUPLICATE_USER);
         }
 
-        User newUser = userRepository.save(new User(username, email, password));
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User newUser = userRepository.save(new User(username, email, encodedPassword));
         return new UserResponseDto(newUser);
     }
 
@@ -57,10 +61,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(Long id, String oldPassword, String newPassword) {
         User findUser = userRepository.findByIdOrElseThrow(id);
-        if (!findUser.getPassword().equals(oldPassword)) {
+        if (!passwordEncoder.matches(oldPassword, findUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
         }
-        findUser.updatePassword(newPassword);
+
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+        findUser.updatePassword(encodedNewPassword);
     }
 
     @Override
