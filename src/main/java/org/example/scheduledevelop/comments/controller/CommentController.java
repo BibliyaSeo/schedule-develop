@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Transactional
@@ -25,5 +27,12 @@ public class CommentController {
         HttpSession session = request.getSession(false);
         Long userId = (Long) session.getAttribute("LOGIN_USER");
         return commentService.createComment(scheduleId, userId, dto.getContents());
+    }
+
+    // 댓글 조회
+    @GetMapping("/schedule/{scheduleId}/comments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CommentResponseDto> findComments(@PathVariable Long scheduleId) {
+        return commentService.findAllComments(scheduleId);
     }
 }

@@ -11,6 +11,8 @@ import org.example.scheduledevelop.users.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,5 +31,15 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment(contents, user, schedule);
         commentRepository.save(comment);
         return new CommentResponseDto(comment);
+    }
+
+    @Override
+    public List<CommentResponseDto> findAllComments(Long scheduleId) {
+        // 스케줄 유효
+        Schedule schedule = scheduleService.findEntityById(scheduleId);
+        return commentRepository.findAllByScheduleId(schedule.getId())
+                .stream()
+                .map(CommentResponseDto::new)
+                .toList();
     }
 }
