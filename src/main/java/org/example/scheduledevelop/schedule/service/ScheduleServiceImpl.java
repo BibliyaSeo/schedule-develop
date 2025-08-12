@@ -51,6 +51,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         return new ScheduleResponseDto(findSchedule);
     }
 
+    // 엔티티 반환용
+    @Override
+    public Schedule findEntityById(Long id) {
+        return scheduleRepository.findByIdOrElseThrow(id);
+    }
+
     // 일정 수정
     @Override
     public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {

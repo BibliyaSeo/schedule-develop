@@ -1,16 +1,18 @@
 package org.example.scheduledevelop.schedule.service;
 
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.example.scheduledevelop.schedule.entity.Schedule;
 
 import java.util.List;
 
 public interface ScheduleService {
-    ScheduleResponseDto createSchedule(@RequestBody Long userId, String title, String contents);
+    ScheduleResponseDto createSchedule(Long userId, String title, String contents);
 
     List<ScheduleResponseDto> findScheduleByUsername(String username);
 
-    ScheduleResponseDto findScheduleById(@RequestBody Long id);
+    ScheduleResponseDto findScheduleById(Long id);
+
+    Schedule findEntityById(Long id);
 
     ScheduleResponseDto updateSchedule(Long id, String title, String contents);
 

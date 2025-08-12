@@ -57,6 +57,12 @@ public class UserServiceImpl implements UserService {
         return new UserResponseDto(findUser);
     }
 
+    // 엔티티 조회용
+    @Override
+    public User findEntityById(Long id) {
+        return userRepository.findByIdOrElseThrow(id);
+    }
+
     // 비밀번호 변경
     @Override
     public void updatePassword(Long id, String oldPassword, String newPassword) {
