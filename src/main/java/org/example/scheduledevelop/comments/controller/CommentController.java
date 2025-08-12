@@ -42,4 +42,12 @@ public class CommentController {
         Long userId = SessionUtil.getLoginUserId(request);
         return commentService.updateComment(commentId, userId, dto.getContents());
     }
+
+    // 댓글 삭제
+    @DeleteMapping("/comments/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteComment(HttpServletRequest request, @PathVariable Long commentId) {
+        Long userId = SessionUtil.getLoginUserId(request);
+        commentService.deleteComment(commentId, userId);
+    }
 }

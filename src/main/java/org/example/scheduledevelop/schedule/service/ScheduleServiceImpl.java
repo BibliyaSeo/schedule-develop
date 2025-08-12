@@ -68,7 +68,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         // 유저 아이디와 수정하려는 아이디가 같다면
         if (!findSchedule.getUser().getId().equals(userId)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인만 일정을 수정할 수 있습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         }
         findSchedule.updateSchedule(title, contents);
         return new ScheduleResponseDto(findSchedule);

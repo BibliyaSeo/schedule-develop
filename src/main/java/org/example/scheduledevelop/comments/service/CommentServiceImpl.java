@@ -50,9 +50,18 @@ public class CommentServiceImpl implements CommentService {
         Comment findComment = commentRepository.findByIdOrElseThrow(commentId);
         // 댓글의 작성자 아이디와 지금 로그인 된 아이디가 같다면
         if (!findComment.getUser().getId().equals(userId)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인만 댓글을 수정할 수 있습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         }
         findComment.updateComment(contents);
         return new CommentResponseDto(findComment);
+    }
+
+    @Override
+    public void deleteComment(Long commentId, Long userId) {
+        Comment findComment = commentRepository.findByIdOrElseThrow(commentId);
+        if (!findComment.getUser().getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
+        }
+        commentRepository.delete(findComment);
     }
 }

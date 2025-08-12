@@ -10,4 +10,6 @@ public interface CommentService {
     List<CommentResponseDto> findAllComments(Long scheduleId);
 
     CommentResponseDto updateComment(Long commentId, Long userId, String contents);
+
+    void deleteComment(Long commentId, Long userId);
 }
