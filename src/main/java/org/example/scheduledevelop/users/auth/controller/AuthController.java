@@ -29,7 +29,7 @@ public class AuthController {
 
     // 로그아웃
     @PostMapping("/logout")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         // 세션이 존재하면 -> 로그인이 된 경우
