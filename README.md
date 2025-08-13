@@ -119,8 +119,8 @@ Content-Type: application/json<br>
 ### 🔑 인증(Auth) 관련
 |기능                | Method | URL            | 요청 Body                                               |응답 예시  |응답 코드 |
 | ----------------- | ------ | -------------- | --------------------------------------------------------- |------|-----|
-|로그인 | POST   | `/auth/login`  |  `{ "email": "user@example.com", "password": "Passw0rd" }` | -|200|
-|로그아웃 | POST   | `/auth/logout` |  -                                                         |-|200|
+|로그인 | POST   | `/auth/login`  |  `{ "email": "user@example.com", "password": "Passw0rd" }` | `"로그인 성공"`|200|
+|로그아웃 | POST   | `/auth/logout` |  -                                                         |-|204|
 
 
 ### 📅 일정(Schedule) 관련
