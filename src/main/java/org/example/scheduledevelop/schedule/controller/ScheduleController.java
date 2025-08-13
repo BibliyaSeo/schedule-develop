@@ -9,10 +9,9 @@ import org.example.scheduledevelop.schedule.dto.DetailScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.UpdateScheduleRequestDto;
 import org.example.scheduledevelop.schedule.service.ScheduleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/schedule")
@@ -32,8 +31,10 @@ public class ScheduleController {
     // 일정 전체 조회(또는 작성자명 조회)
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ScheduleResponseDto> findScheduleByUsername(@RequestParam(required = false) String username) {
-        return scheduleService.findScheduleByUsername(username);
+    public Page<ScheduleResponseDto> findScheduleByUsername(@RequestParam(required = false) String username,
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+        return scheduleService.findScheduleByUsername(username, page, size);
     }
 
     // 일정 개별 조회
