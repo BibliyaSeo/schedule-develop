@@ -13,4 +13,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     default Comment findByIdOrElseThrow(Long commentId) {
         return findById(commentId).orElseThrow(() -> new MyCustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
+
+    long countByScheduleId(Long id);
 }

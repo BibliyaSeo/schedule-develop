@@ -3,13 +3,12 @@ package org.example.scheduledevelop.schedule.service;
 import org.example.scheduledevelop.schedule.dto.DetailScheduleResponseDto;
 import org.example.scheduledevelop.schedule.dto.ScheduleResponseDto;
 import org.example.scheduledevelop.schedule.entity.Schedule;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ScheduleService {
     ScheduleResponseDto createSchedule(Long userId, String title, String contents);
 
-    List<ScheduleResponseDto> findScheduleByUsername(String username);
+    Page<ScheduleResponseDto> findScheduleByUsername(String username, int page, int size);
 
     DetailScheduleResponseDto findScheduleById(Long id);
 
