@@ -31,7 +31,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
                 LEFT JOIN Comment c ON c.schedule.id = s.id
                 WHERE (:username IS NULL OR s.user.username = :username)
                 GROUP BY s.id, s.user.id, s.user.username, s.title, s.contents, s.createdAt, s.updatedAt
-                ORDER BY s.updatedAt DESC
             """)
     Page<ScheduleResponseDto> findAllWithCommentCountAndUsername(
             @Param("username") String username,

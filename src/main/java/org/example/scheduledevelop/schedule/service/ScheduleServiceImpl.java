@@ -12,6 +12,7 @@ import org.example.scheduledevelop.users.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional(readOnly = true)
     public Page<ScheduleResponseDto> findScheduleByUsername(String username, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("updatedAt").descending());
         return scheduleRepository.findAllWithCommentCountAndUsername(username, pageable);
     }
 
@@ -78,7 +79,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         }
         findSchedule.updateSchedule(title, contents);
-        return new ScheduleResponseDto(findSchedule, 0);
+        long commentCount = commentRepository.countByScheduleId(findSchedule.getId());
+        return new ScheduleResponseDto(findSchedule, commentCount);
     }
 
     @Override
