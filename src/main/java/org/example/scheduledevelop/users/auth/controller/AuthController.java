@@ -9,6 +9,8 @@ import org.example.scheduledevelop.users.auth.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import static org.example.scheduledevelop.common.consts.Const.LOGIN_USER;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class AuthController {
     public String login(HttpServletRequest request, @Valid @RequestBody LogInRequestDto dto) {
         Long userId = authService.login(dto.getEmail(), dto.getPassword());
         HttpSession session = request.getSession();
-        session.setAttribute("LOGIN_USER", userId);
+        session.setAttribute(LOGIN_USER, userId);
 
         return "로그인 성공";
     }
