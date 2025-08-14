@@ -36,6 +36,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentResponseDto> findAllComments(Long scheduleId) {
         // 스케줄 유효
         Schedule schedule = scheduleService.findEntityById(scheduleId);
