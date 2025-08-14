@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-public class SessionUtil {
-    private static final String LOGIN_USER = "LOGIN_USER";
+import static org.example.scheduledevelop.common.consts.Const.LOGIN_USER;
 
+public class SessionUtil {
     public static Long getLoginUserId(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
